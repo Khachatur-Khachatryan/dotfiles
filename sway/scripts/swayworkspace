@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# ORIGINAL: https://github.com/Iss-in/dotfiles-v2/blob/master/.config/sway/scripts/swayworkspace
+
 # swayworkspace provides custom workspace management for sway.
 # 
 # Navigating to the previous/next workspace of the current output:
