@@ -1,0 +1,220 @@
+### Variables:
+
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# Setting terminal and run menu
+set $term alacritty
+set $menu dmenu_path | wofi --show drun -I | xargs swaymsg exec --
+
+# Autostart:
+
+workspace 1
+exec google-chrome
+exec /home/khachatur/go/bin/waysct
+
+
+# IO config:
+
+output HDMI-A-2 resolution 1920x1080 position 1920,0
+output * bg /home/khachatur/pictures/sway-wallpaper.jpg fill
+
+input * {
+	xkb_layout us,ru
+	xkb_options grp:caps_toggle
+}
+
+
+
+### Key bindings:
+
+## System key bindings
+
+# Kill focused window
+bindsym --to-code $mod+Shift+q kill
+
+# Start wofi
+bindsym --to-code $mod+d exec $menu
+
+# Float modifier
+floating_modifier $mod normal
+
+# Reload the configuration file
+bindsym --to-code $mod+Shift+c reload
+
+# Exit sway (logs you out of your Wayland session)
+bindsym --to-code $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+
+# Sound buttons configure
+bindsym --to-code XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --to-code XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym --to-code XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+# Start applications
+bindsym --to-code $mod+Return exec $term
+bindsym --to-code $mod+Shift+g exec google-chrome
+bindsym --to-code $mod+Shift+w exec webstorm
+bindsym --to-code $mod+Shift+d exec discord
+bindsym --to-code $mod+Shift+t exec telegram-desktop
+bindsym --to-code $mod+Shift+s exec steam
+bindsym --to-code $mod+Shift+p exec pycharm
+
+
+## Moving around:
+
+# Move your focus around
+bindsym --to-code $mod+$left focus left
+bindsym --to-code $mod+$down focus down
+bindsym --to-code $mod+$up focus up
+bindsym --to-code $mod+$right focus right
+
+# Or use $mod+[up|down|left|right]
+bindsym $mod+Alt+Left focus left
+bindsym $mod+Alt+Down focus down
+bindsym $mod+Alt+Up focus up
+bindsym $mod+Alt+Right focus right
+
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# Ditto, with arrow keys
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+
+## Workspaces:
+
+# Switch to workspace
+bindsym $mod+Right exec /home/khachatur/.config/sway/scripts/swayworkspace navigate next
+bindsym $mod+Left exec /home/khachatur/.config/sway/scripts/swayworkspace navigate prev
+bindsym $mod+1 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 1
+bindsym $mod+2 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 2
+bindsym $mod+3 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 3
+bindsym $mod+4 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 4
+bindsym $mod+5 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 5
+bindsym $mod+6 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 6
+bindsym $mod+7 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 7
+bindsym $mod+8 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 8
+bindsym $mod+9 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 9
+bindsym $mod+0 exec /home/khachatur/.config/sway/scripts/swayworkspace navigate 10
+    
+# Move focused container to workspace
+bindsym $mod+Shift+1 exec /home/khachatur/.config/sway/scripts/swayworkspace move 1
+bindsym $mod+Shift+2 exec /home/khachatur/.config/sway/scripts/swayworkspace move 2
+bindsym $mod+Shift+3 exec /home/khachatur/.config/sway/scripts/swayworkspace move 3
+bindsym $mod+Shift+4 exec /home/khachatur/.config/sway/scripts/swayworkspace move 4
+bindsym $mod+Shift+5 exec /home/khachatur/.config/sway/scripts/swayworkspace move 5
+bindsym $mod+Shift+6 exec /home/khachatur/.config/sway/scripts/swayworkspace move 6
+bindsym $mod+Shift+7 exec /home/khachatur/.config/sway/scripts/swayworkspace move 7
+bindsym $mod+Shift+8 exec /home/khachatur/.config/sway/scripts/swayworkspace move 8
+bindsym $mod+Shift+9 exec /home/khachatur/.config/sway/scripts/swayworkspace move 9
+bindsym $mod+Shift+0 exec /home/khachatur/.config/sway/scripts/swayworkspace move 10
+
+
+## Layout stuff:
+
+# Split
+bindsym --to-code $mod+b splith
+bindsym --to-code $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym --to-code $mod+s layout stacking
+bindsym --to-code $mod+w layout tabbed
+bindsym --to-code $mod+e layout toggle split
+
+# Make the current focus fullscreen
+bindsym --to-code $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym --to-code $mod+Shift+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+bindsym --to-code $mod+space focus mode_toggle
+
+# Move focus to the parent container
+bindsym --to-code $mod+a focus parent
+
+
+## Scratchpad:
+
+# Move the currently focused window to the scratchpad
+bindsym --to-code $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym --to-code $mod+minus scratchpad show
+
+
+## Resizing containers:
+
+bindsym --to-code $mod+r mode "resize"
+
+mode "resize" {
+    # Resize with h,j,k,l
+    bindsym --to-code $left resize shrink width 10px
+    bindsym --to-code $down resize grow height 10px
+    bindsym --to-code $up resize shrink height 10px
+    bindsym --to-code $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym --to-code Left resize shrink width 10px
+    bindsym --to-code Down resize grow height 10px
+    bindsym --to-code Up resize shrink height 10px
+    bindsym --to-code Right resize grow width 10px
+
+    # Return to default mode
+    bindsym --to-code Return mode "default"
+    bindsym --to-code Escape mode "default"
+}
+
+
+
+### GUI settings:
+
+## Window decorations:
+
+# Borders
+default_border none
+default_floating_border none
+
+# Gaps
+gaps inner 10
+gaps outer 10
+smart_gaps on
+
+
+## Status Bar:
+
+bar {
+    position top
+    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+
+## GTK config:
+
+set $gnome-schema org.gnome.desktop.interface
+exec_always {
+	gsettings set $gnome-schema gtk-theme 'Breeze'
+	gsettings set $gnome-schema icon-theme 'Tela circle'
+	gsettings set $gnome-schema cursor-theme 'Breeze'
+	gsettings set $gnome-schema font-name 'JetBrainsMono 14'	
+}
+
+include /etc/sway/config.d/*
