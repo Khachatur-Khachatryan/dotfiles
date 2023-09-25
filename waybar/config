@@ -1,0 +1,121 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 35,
+    "modules-left": ["custom/menu", "sway/workspaces", "sway/window"],
+    "modules-center": ["custom/wf-recorder", "sway/mode"],
+    "modules-right": [
+        "tray",
+        "sway/language",
+        "cpu",
+        "memory",
+        "battery",
+        "network",
+        "pulseaudio",
+        "clock"
+    ],
+
+    
+    "sway/workspaces": {
+         "disable-scroll": true,
+         "all-outputs": true
+    },
+
+    "sway/window": {
+        "format": "{}",
+        "max-length": 50,
+        "tooltip": true
+    },
+
+    "custom/dunst": {
+        "exec": "/usr/share/sway/scripts/dunst.sh",
+        "on-click": "dunstctl set-paused toggle",
+        "restart-interval": 1,
+    },
+    
+    "sway/language": {
+        "format": " {}",
+        "min-length": 5,
+        "tooltip": false,
+        "on-click": "swaymsg input $(swaymsg -t get_inputs --raw | jq '[.[] | select(.type == \"keyboard\")][0] | .identifier') xkb_switch_layout next"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": " {usage}%",
+        "states": {
+          "warning": 70,
+          "critical": 90
+          },
+    "on-click": "swaymsg exec \\$flock \\$term_float btop"
+    },
+
+    "memory": {
+        "interval": 30,
+        "format": " {}%",
+        "states": {
+          "warning": 70,
+          "critical": 90
+        },
+    "on-click": "swaymsg exec \\$flock \\$term_float btop"
+    
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""]
+    },
+
+    "network": {
+       "format-wifi": " ({signalStrength}%)",
+       "format-ethernet": "",
+       "format-disconnected": "",
+       "tooltip-format": "{ifname} ({essid}): {ipaddr}",
+       "tooltip-format": "{icon} {ifname}: {ipaddr}",
+       "tooltip-format-ethernet": "{icon} {ifname}: {ipaddr}",
+       "tooltip-format-wifi": "{icon} {ifname} ({essid}): {ipaddr}",
+       "tooltip-format-disconnected": "{icon} disconnected",
+       "tooltip-format-disabled": "{icon} disabled",
+       "on-click": "swaymsg exec \\$flock \\$term_float nmtui connect"
+    },
+
+    "bluetooth": {
+        "format": "",
+        "format-disabled": "",
+        "on-click": "swaymsg exec \\$bluetooth",
+        "on-click-right": "rfkill toggle bluetooth",
+        "tooltip-format": "{}"
+    },
+
+    "pulseaudio": {
+       "format": "{icon}  {volume}% {format_source}",
+       "format-bluetooth": "{icon} {volume}%",
+       "format-muted": " {format_source}",
+       "format-source": "  {volume}%",
+       "format-source-muted": "",
+       "format-icons": {
+           "headphone": "",
+           "headset": "",
+           "default": ["", "", ""]
+       },
+       "tooltip-format": "{icon}  {volume}% {format_source}",
+       "on-click": "swaymsg exec \\$flock \\$pulseaudio",
+       "on-click-middle": "swaymsg exec \\$volume_mute",
+       "on-click-right": "swaymsg exec pavucontrol",
+       "on-scroll-up": "swaymsg exec \\$volume_up",
+       "on-scroll-down": "swaymsg exec \\$volume_down"
+    },
+    
+    "clock": {
+        "format": "{:%e %b %H:%M}",
+        "tooltip": true,
+        "tooltip-format": "{:%d.%m.%Y %H:%M}",
+        "interval": 5,
+        "on-click": "swaymsg exec \\$calendar"
+    },
+    
+    "tray": {
+        "icon-size": 21,
+        "spacing": 10
+    }
+}

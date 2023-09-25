@@ -13,14 +13,16 @@ set $right l
 set $term alacritty
 set $menu dmenu_path | wofi --show drun -I | xargs swaymsg exec --
 
-# Autostart:
+## Autostart:
 
-workspace 1
-exec google-chrome
-exec /home/khachatur/go/bin/waysct
+# For OBS
+exec ~/.config/sway/scripts/xdg-portal
+
+# For color temperature
+exec_always redshift -O 2800
 
 
-# IO config:
+## IO config:
 
 output HDMI-A-2 resolution 1920x1080 position 1920,0
 output * bg /home/khachatur/pictures/sway-wallpaper.jpg fill
@@ -49,7 +51,7 @@ floating_modifier $mod normal
 bindsym --to-code $mod+Shift+c reload
 
 # Exit sway (logs you out of your Wayland session)
-bindsym --to-code $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+bindsym --to-code $mod+Shift+e exec swaymsg exit
 
 # Sound buttons configure
 bindsym --to-code XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -62,9 +64,12 @@ bindsym --to-code $mod+Shift+g exec google-chrome
 bindsym --to-code $mod+Shift+w exec webstorm
 bindsym --to-code $mod+Shift+d exec discord
 bindsym --to-code $mod+Shift+t exec telegram-desktop
-bindsym --to-code $mod+Shift+s exec steam
 bindsym --to-code $mod+Shift+p exec pycharm
 
+# Screenshot tool
+bindsym Alt+Print exec grimshot copy active
+bindsym $mod+Shift+s exec grimshot copy area
+bindsym Print exec grimshot copy window
 
 ## Moving around:
 
@@ -137,7 +142,7 @@ bindsym --to-code $mod+e layout toggle split
 bindsym --to-code $mod+f fullscreen
 
 # Toggle the current focus between tiling and floating mode
-bindsym --to-code $mod+Shift+space floating toggle
+bindsym --to-code $mod+Shift+f floating toggle
 
 # Swap focus between the tiling area and the floating area
 bindsym --to-code $mod+space focus mode_toggle
@@ -185,8 +190,8 @@ mode "resize" {
 ## Window decorations:
 
 # Borders
-default_border none
-default_floating_border none
+default_border pixel 0
+for_window [floating] border pixel 5
 
 # Gaps
 gaps inner 10
@@ -197,13 +202,7 @@ smart_gaps on
 ## Status Bar:
 
 bar {
-    position top
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
+    swaybar_command waybar
 }
 
 
@@ -218,3 +217,10 @@ exec_always {
 }
 
 include /etc/sway/config.d/*
+
+
+## Floating windows:
+
+for_window [app_id="nautilus"] floating enable
+for_window [app_id="telegram-desktop"] floating enable
+for_window [app_id="obs"] floating enable
